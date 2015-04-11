@@ -1,13 +1,14 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
-    <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
+    <div class="player-hand-container"></div>
+    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
   '
 
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.get('playerHand').stand()
+    # for later, when hit stand button, then set hide attr on hit button
+    'click .stand-button': -> @model.get('dealerHand').stand(@model.get('playerHand').scores()[0])
 
   initialize: ->
     @render()
