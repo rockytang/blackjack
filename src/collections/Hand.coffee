@@ -4,7 +4,9 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    @add(@deck.pop())
+    lastCard = @deck.pop()
+    @add(lastCard)
+    return lastCard
     # recalculate
       # if > 21
         #bust
@@ -33,14 +35,15 @@ class window.Hand extends Backbone.Collection
       return false
 
     if @minScore() >= 17 and @minScore() < playerScore
-      console.log 'player wins'
+      console.log 'should trigger playerWins, now in hand coll.'
+
+      @trigger 'playerWins'
+
       return false
 
     if @minScore() >= 17 and @minScore() > playerScore
       console.log 'dealer wins'
       return true
-
-
 
     @hit()
     @stand(playerScore)
